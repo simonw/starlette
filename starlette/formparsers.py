@@ -115,6 +115,8 @@ class FormParser:
 
 
 class MultiPartParser:
+    UploadFile = UploadFile
+
     def __init__(
         self, headers: Headers, stream: typing.AsyncGenerator[bytes, None]
     ) -> None:
@@ -218,7 +220,7 @@ class MultiPartParser:
                     field_name = _user_safe_decode(options[b"name"], charset)
                     if b"filename" in options:
                         filename = _user_safe_decode(options[b"filename"], charset)
-                        file = UploadFile(
+                        file = self.UploadFile(
                             filename=filename,
                             content_type=content_type.decode("latin-1"),
                         )
